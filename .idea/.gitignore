@@ -2,7 +2,7 @@
 /shelf/
 /workspace.xml
 # Datasource local storage ignored files
-/../../../../:\Code Warehouse\Torch Worehouse\.idea/dataSources/
+/../../../../:\TorchWorehouse\torch_learn\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/

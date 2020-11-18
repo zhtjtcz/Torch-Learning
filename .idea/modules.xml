@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Torch Worehouse.iml" filepath="$PROJECT_DIR$/.idea/Torch Worehouse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/torch_learn.iml" filepath="$PROJECT_DIR$/.idea/torch_learn.iml" />
     </modules>
   </component>
 </project>
