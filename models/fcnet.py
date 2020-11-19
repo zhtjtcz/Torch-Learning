@@ -31,8 +31,6 @@ class FCNet(nn.Module):
 		if self.using_dropout:
 			features = self.dropout(features)
 		logits = self.classifier(features)  # logits.shape: (B, output_dim)
-		print(logits)
-		print(logits.size())
 		return logits
 		
 	def _make_backbone(self, num_layers, in_dims, out_dims):
