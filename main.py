@@ -9,7 +9,10 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from data import get_dataloaders, MNIST_img_ch, MNIST_img_size, MNIST_num_classes
 from misc import time_str, set_seed, init_params
 from models import FCNet
+
 from vis import plot_curves
+
+from cnnnet import CnnNet
 
 USING_GPU = torch.cuda.is_available()
 
@@ -45,13 +48,16 @@ def main():
 	train_loader, test_loader = get_dataloaders(data_root_path=data_root_path, batch_size=128)
 
 	# hyper-parameters:
-	BASIC_LR = 5e-4
+	# BASIC_LR = 5e-4
+	
+	BASIC_LR = 5e-2
 	MIN_LR = 0.
 	WEIGHT_DECAY = 1e-5
 	OP_MOMENTUM = 0.9
 	EPOCHS = 8
 	BATCH_SIZE = 8
 	DROP_OUT_RATE = 0.1
+
 	ITERS = len(train_loader)
 	print(
 		f'=== hyper-params ===\n'
@@ -67,12 +73,15 @@ def main():
 
 	# 至此开始为初始化与训练部分
 	set_seed(0)
-
+	'''
 	net = FCNet(
 		input_dim=MNIST_img_ch * MNIST_img_size ** 2,
 		output_dim=MNIST_num_classes,
 		dropout_p=DROP_OUT_RATE
 	)
+	'''
+	
+	net = CnnNet()
 
 	init_params(net, verbose=True)
 	if USING_GPU:
@@ -80,7 +89,7 @@ def main():
 	#如果有GPU,放到GPU上训练
 
 	print('=== start training from scratch ===\n')
-		
+
 	train_accs, test_accs = [], []
 	train_losses, test_losses = [], []
 	lrs = []
@@ -88,6 +97,17 @@ def main():
 	set_seed(0)
 	optimizer = SGD(net.parameters(), lr=BASIC_LR, weight_decay=WEIGHT_DECAY, momentum=OP_MOMENTUM)
 	scheduler = CosineAnnealingLR(optimizer, T_max=EPOCHS * ITERS, eta_min=MIN_LR)
+
+	'''
+	for epoch in range(EPOCHS):
+		for local_iter, (inputs, targets) in enumerate(train_loader):
+			global_iter = epoch * ITERS + local_iter
+			if USING_GPU:
+				inputs, targets = inputs.cuda(), targets.cuda()
+			logits = net(inputs)
+			break
+		break
+	'''
 
 	test_freq = 64
 	set_seed(0)

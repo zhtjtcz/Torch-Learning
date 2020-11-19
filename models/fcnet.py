@@ -13,21 +13,26 @@ class FCNet(nn.Module):
 		self.bn0 = nn.BatchNorm1d(input_dim)
 		self.backbone = self._make_backbone(
 			len(hid_dims),
-			[input_dim] + hid_dims[:-1],
-			hid_dims
+			[input_dim] + hid_dims[:-1],	# 输入层加隐层
+			hid_dims						# 输出层
 		)
+		# 网络主要架构
 		if self.using_dropout:
 			self.dropout_p = dropout_p
 			self.dropout = nn.Dropout(p=dropout_p)
 		self.classifier = nn.Linear(hid_dims[-1], output_dim, bias=True)
-		
-	def forward(self, x):				   # x.shape:  (B, C, H, W)
+		# 最后一层是全连接层
+		# 做线性变换,带偏置
+
+	def forward(self, x):				   	# x.shape:  (B, C, H, W)
 		flatten_x = x.view(x.size(0), -1)   # flatten_x.shape: (B, C*H*W)
 		flatten_x = self.bn0(flatten_x)
 		features = self.backbone(flatten_x) # features.shape: (B, hid_dims[-1])
 		if self.using_dropout:
 			features = self.dropout(features)
 		logits = self.classifier(features)  # logits.shape: (B, output_dim)
+		print(logits)
+		print(logits.size())
 		return logits
 		
 	def _make_backbone(self, num_layers, in_dims, out_dims):
