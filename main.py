@@ -37,6 +37,7 @@ def test(test_ld, net: nn.Module):
 	test_loss = tot_loss / tot_iters
 	return test_acc, test_loss
 
+# 计算当前网络的正确率
 
 def main():
 	global USING_GPU
@@ -46,17 +47,21 @@ def main():
 	data_root_path = os.path.abspath(os.path.join(os.path.expanduser('~'), 'datasets', 'mnist'))
 	set_seed(0)
 	train_loader, test_loader = get_dataloaders(data_root_path=data_root_path, batch_size=128)
+	# 初始化
 
 	# hyper-parameters:
-	# BASIC_LR = 5e-4
 	
+	# BASIC_LR = 5e-4
+	# FCNet 的LR
 	BASIC_LR = 5e-2
+	# CNNNet 的LR
 	MIN_LR = 0.
 	WEIGHT_DECAY = 1e-5
 	OP_MOMENTUM = 0.9
 	EPOCHS = 8
 	BATCH_SIZE = 8
 	DROP_OUT_RATE = 0.1
+	# 调参时只需要调上面的7个参数
 
 	ITERS = len(train_loader)
 	print(
@@ -80,8 +85,10 @@ def main():
 		dropout_p=DROP_OUT_RATE
 	)
 	'''
-	
+	# 全连接网络
+
 	net = CnnNet()
+	# CNN 网络
 
 	init_params(net, verbose=True)
 	if USING_GPU:
