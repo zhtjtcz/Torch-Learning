@@ -9,7 +9,7 @@ class CnnNet(nn.Module):
 		# 卷积核
 		self.pool = nn.MaxPool2d(2, 2)
 		# 池化
-		self.fc1 = nn.Linear(256, 128)
+		self.fc1 = nn.Linear(16 * 4*4, 128)
 		self.fc2 = nn.Linear(128, 64)
 		self.fc3 = nn.Linear(64, 10)
 		# 全连接
