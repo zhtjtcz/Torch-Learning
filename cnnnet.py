@@ -15,6 +15,7 @@ class CnnNet(nn.Module):
 		# 全连接
 
 	def forward(self,x):
+		print(x[0])
 		x = self.pool(F.relu(self.conv1(x)))
 		x = self.pool(F.relu(self.conv2(x)))
 		x = x.view(x.size(0), -1)
