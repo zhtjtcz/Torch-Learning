@@ -104,7 +104,7 @@ def main():
 	set_seed(0)
 	optimizer = SGD(net.parameters(), lr=BASIC_LR, weight_decay=WEIGHT_DECAY, momentum=OP_MOMENTUM)
 	scheduler = CosineAnnealingLR(optimizer, T_max=EPOCHS * ITERS, eta_min=MIN_LR)
-	
+	'''
 	for epoch in range(EPOCHS):
 		for local_iter, (inputs, targets) in enumerate(train_loader):
 			global_iter = epoch * ITERS + local_iter
@@ -114,8 +114,8 @@ def main():
 			break
 		break
 	# 调试用代码
-	
 	'''
+	
 	test_freq = 64
 	set_seed(0)
 	for epoch in range(EPOCHS):
@@ -159,6 +159,5 @@ def main():
 	print(f'\n=== final test acc: {final_test_acc:.2f} ===\n')
 
 	plot_curves(train_accs, test_accs, train_losses, test_losses, lrs)
-	'''
 if __name__ == '__main__':
 	main()
